@@ -1,5 +1,5 @@
 {
-  "name": "n",
+  "name": "project-manager",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:n": "node dist/n/server/server.mjs"
+    "serve:ssr:Project-manager": "node dist/Project-manager/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
