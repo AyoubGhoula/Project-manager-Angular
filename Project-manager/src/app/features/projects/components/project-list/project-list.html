@@ -1,14 +1,20 @@
 
-<div class="text-5xl font-bold text-cyan-900  mb-7 ml-1.5">Project List</div>
-<div class="space-y-4 ">
-  @for (project of projects; track project.name) {
-    <div class="bg-white shadow rounded p-4">
-      <h2 class="text-3xl font-bold text-blue-600">{{ project.name }}</h2>
-      <p>{{ project.description }}</p>
-      <p class="text-sm text-gray-500">Statut : {{ project.status }}</p>
 
+
+<div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 my-7">
+  @for (project of projects; track project.name) {
+  <article class="flex h-full flex-col rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-lg">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h3 class="text-3xl font-semibold text-slate-900">{{ project.name }}</h3>
+        <p class="mt-1 text-sm text-slate-600">{{ project.description }}</p>
+      </div>
+      <span class="shrink-0 rounded-full bg-cyan-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-700">{{ project.status }}</span>
+    </div>
+    <div class="mt-5">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Tasks</p>
       <app-task-list [tasks]="project.tasks"></app-task-list>
     </div>
+  </article>
   }
 </div>
-
