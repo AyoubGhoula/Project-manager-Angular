@@ -1,0 +1,10 @@
+<div class="mt-4 space-y-2 ">
+  @for (task of tasks; track task.title) {
+    <div class="border-l-4 p-2"
+         [ngClass]="getStatusColor(task.status)">
+      <p class="font-semibold">{{ task.title }}</p>
+      <p class="text-sm">Priorité : {{ task.priority }}</p>
+      <p class="text-sm">Statut : {{ task.status }}</p>
+    </div>
+  }
+</div>
