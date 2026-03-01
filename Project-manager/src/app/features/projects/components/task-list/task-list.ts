@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { get } from 'http';
+import { HighlightStatusDirective } from '../../directives/highlight-status.directive';
+import { PriorityColorPipe } from '../../pipes/priority-color.pipe';
 
 interface Task {
   title: string;
@@ -11,12 +12,32 @@ interface Task {
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HighlightStatusDirective, PriorityColorPipe],
   templateUrl: './task-list.html',
 })
 export class TaskList {
 
   @Input() tasks: Task[] = [];
+  @Output() statusChanged = new EventEmitter<{ task: Task; newStatus: string }>();
+  @Output() taskDeleted = new EventEmitter<Task>();
+
+  private statusFlow = ['En attente', 'En cours', 'Terminé'];
+
+  nextStatus(task: Task): void {
+    const currentIndex = this.statusFlow.indexOf(task.status);
+    const nextIndex = (currentIndex + 1) % this.statusFlow.length;
+    this.statusChanged.emit({ task, newStatus: this.statusFlow[nextIndex] });
+  }
+
+  deleteTask(task: Task): void {
+    this.taskDeleted.emit(task);
+  }
+
+  getNextStatusLabel(status: string): string {
+    const currentIndex = this.statusFlow.indexOf(status);
+    const nextIndex = (currentIndex + 1) % this.statusFlow.length;
+    return this.statusFlow[nextIndex];
+  }
 
   getStatusColor(status: string) {
     switch (status) {

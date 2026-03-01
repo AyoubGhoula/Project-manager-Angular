@@ -1,16 +1,49 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskList } from '../task-list/task-list';
+import { FormsModule } from '@angular/forms';
+import { ProjectDetail } from '../project-detail/project-detail';
+
+interface Task {
+  title: string;
+  priority: string;
+  status: string;
+}
+
+interface Project {
+  name: string;
+  description: string;
+  status: string;
+  tasks: Task[];
+}
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, TaskList],
+  imports: [CommonModule, FormsModule, ProjectDetail],
   templateUrl: './project-list.html',
 })
-export class ProjectList {
 
-  projects = [
+export class ProjectList {
+  searchTerm: string = '';
+  selectedProject: Project | null = null;
+
+  selectProject(project: Project): void {
+    this.selectedProject = project;
+  }
+
+  get filteredProjects(): Project[] {
+    if (!this.searchTerm) {
+      return this.projects;
+    }
+    const term = this.searchTerm.toLowerCase();
+    return this.projects.filter(
+      (p) =>
+        p.name.toLowerCase().includes(term) ||
+        p.description.toLowerCase().includes(term)
+    );
+  }
+
+  projects: Project[] = [
     {
       name: 'project manager',
       description: 'Apprendre à créer une application simple de gestion de projets avec Angular, comprendre la création des composants réutilisables et intégrer Tailwind pour le style.',
