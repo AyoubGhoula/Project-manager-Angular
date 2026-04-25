@@ -1,0 +1,135 @@
+<div class="space-y-6">
+  <!-- Overview Cards -->
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Total Projects -->
+    <div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-cyan-50 to-sky-50 p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-600">Total Projets</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ totalProjects }}</p>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-100">
+          <span class="text-2xl">📊</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Projects -->
+    <div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-green-50 to-emerald-50 p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-600">Terminés</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ completedProjects }}</p>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+          <span class="text-2xl">✅</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- In Progress -->
+    <div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-600">En Cours</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ inProgressProjects }}</p>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+          <span class="text-2xl">🔄</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending -->
+    <div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-slate-600">En Attente</p>
+          <p class="mt-2 text-3xl font-bold text-slate-900">{{ pendingProjects }}</p>
+        </div>
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
+          <span class="text-2xl">⏳</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Statistics -->
+  <div class="grid gap-4 sm:grid-cols-3">
+    <!-- Total Tasks -->
+    <div class="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
+      <h3 class="text-lg font-semibold text-slate-900">Tâches Totales</h3>
+      <p class="mt-2 text-4xl font-bold text-cyan-600">{{ totalTasks }}</p>
+      <p class="mt-1 text-sm text-slate-600">Moyenne: {{ averageTasksPerProject }} par projet</p>
+    </div>
+
+    <!-- Completed Tasks -->
+    <div class="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
+      <h3 class="text-lg font-semibold text-slate-900">Tâches Terminées</h3>
+      <p class="mt-2 text-4xl font-bold text-green-600">{{ completedTasks }}</p>
+      <p class="mt-1 text-sm text-slate-600">Taux: {{ completionRate }}%</p>
+    </div>
+
+    <!-- High Priority -->
+    <div class="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
+      <h3 class="text-lg font-semibold text-slate-900">Priorité Haute</h3>
+      <p class="mt-2 text-4xl font-bold text-red-600">{{ highPriorityTasks }}</p>
+      <p class="mt-1 text-sm text-slate-600">Tâches urgentes</p>
+    </div>
+  </div>
+
+  <!-- Status Distribution -->
+  <div class="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
+    <h3 class="mb-4 text-lg font-semibold text-slate-900">Distribution des Statuts</h3>
+    <div class="space-y-3">
+      <!-- Completed -->
+      <div>
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-sm font-medium text-slate-700">Terminé</span>
+          <span class="text-sm font-semibold text-slate-900">{{ getStatusPercentage('Terminé') }}%</span>
+        </div>
+        <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200">
+          <div 
+            class="h-full rounded-full bg-green-500 transition-all duration-300"
+            [style.width.%]="getStatusPercentage('Terminé')"
+          ></div>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <div>
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-sm font-medium text-slate-700">En cours</span>
+          <span class="text-sm font-semibold text-slate-900">{{ getStatusPercentage('En cours') }}%</span>
+        </div>
+        <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200">
+          <div 
+            class="h-full rounded-full bg-cyan-500 transition-all duration-300"
+            [style.width.%]="getStatusPercentage('En cours')"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Pending -->
+      <div>
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-sm font-medium text-slate-700">En attente</span>
+          <span class="text-sm font-semibold text-slate-900">{{ getStatusPercentage('En attente') }}%</span>
+        </div>
+        <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200">
+          <div 
+            class="h-full rounded-full bg-amber-500 transition-all duration-300"
+            [style.width.%]="getStatusPercentage('En attente')"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (projects.length === 0) {
+    <div class="rounded-xl border border-amber-200 bg-amber-50 p-8 text-center">
+      <p class="text-lg font-medium text-amber-700">Aucun projet à afficher</p>
+      <p class="mt-2 text-sm text-amber-600">Commencez par créer votre premier projet !</p>
+    </div>
+  }
+</div>

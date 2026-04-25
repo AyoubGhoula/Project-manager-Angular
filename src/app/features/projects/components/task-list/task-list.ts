@@ -1,27 +1,30 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HighlightStatusDirective } from '../../directives/highlight-status.directive';
 import { PriorityColorPipe } from '../../pipes/priority-color.pipe';
-
-interface Task {
-  title: string;
-  priority: string;
-  status: string;
-}
+import {
+  PROJECT_STATUSES,
+  TASK_PRIORITIES,
+  ProjectStatus,
+  Task,
+  TaskPriority,
+} from '../../../../core/services/project.service';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, HighlightStatusDirective, PriorityColorPipe],
+  imports: [CommonModule, FormsModule, HighlightStatusDirective, PriorityColorPipe],
   templateUrl: './task-list.html',
 })
 export class TaskList {
-
   @Input() tasks: Task[] = [];
-  @Output() statusChanged = new EventEmitter<{ task: Task; newStatus: string }>();
+  @Output() statusChanged = new EventEmitter<{ task: Task; newStatus: ProjectStatus }>();
+  @Output() priorityChanged = new EventEmitter<{ task: Task; newPriority: TaskPriority }>();
   @Output() taskDeleted = new EventEmitter<Task>();
 
-  private statusFlow = ['En attente', 'En cours', 'Terminé'];
+  readonly availablePriorities = TASK_PRIORITIES;
+  private readonly statusFlow = [...PROJECT_STATUSES];
 
   nextStatus(task: Task): void {
     const currentIndex = this.statusFlow.indexOf(task.status);
@@ -29,42 +32,17 @@ export class TaskList {
     this.statusChanged.emit({ task, newStatus: this.statusFlow[nextIndex] });
   }
 
+  changePriority(task: Task, newPriority: TaskPriority): void {
+    this.priorityChanged.emit({ task, newPriority });
+  }
+
   deleteTask(task: Task): void {
     this.taskDeleted.emit(task);
   }
 
-  getNextStatusLabel(status: string): string {
+  getNextStatusLabel(status: ProjectStatus): ProjectStatus {
     const currentIndex = this.statusFlow.indexOf(status);
     const nextIndex = (currentIndex + 1) % this.statusFlow.length;
     return this.statusFlow[nextIndex];
   }
-
-  getStatusColor(status: string) {
-    switch (status) {
-      case 'En attente':
-        return 'border-yellow-500';
-      case 'En cours':
-        return 'border-cyan-500';
-      case 'Terminé':
-        return 'border-green-500';
-      default:
-        return 'border-gray-300';
-    }
-  }
-
-  getBGStatusColor(status: string) {
-    switch (status) {
-      case 'En attente':
-        return 'bg-amber-200'; 
-      case 'En cours':
-        return 'bg-sky-200';
-      case 'Terminé':
-        return 'bg-green-200';
-      default:
-        return 'bg-gray-200';
-    }
-  }
 }
-
- 
-

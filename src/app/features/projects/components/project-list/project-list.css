@@ -1,0 +1,51 @@
+:host {
+  display: block;
+}
+
+.project-board-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.project-card {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 24px 48px -24px rgba(15, 23, 42, 0.28);
+}
+
+.modal-backdrop {
+  animation: fade-in 180ms ease;
+}
+
+.modal-panel {
+  animation: pop-in 220ms ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "name": "project manager",
+      "description": "Apprendre a creer une application simple de gestion de projets avec Angular, comprendre la creation des composants reutilisables et integrer Tailwind pour le style.",
+      "status": "En attente",
+      "tasks": [
+        {
+          "title": "Architecture du projet",
+          "priority": "Haute",
+          "status": "Terminé"
+        },
+        {
+          "title": "Creer le projet Angular avec Tailwind",
+          "priority": "Moyenne",
+          "status": "Terminé"
+        },
+        {
+          "title": "Developper les composants de base",
+          "priority": "Haute",
+          "status": "Terminé"
+        },
+        {
+          "title": "Integrer Tailwind pour le style",
+          "priority": "Moyenne",
+          "status": "Terminé"
+        },
+        {
+          "title": "Tester et deployer l'application",
+          "priority": "Basse",
+          "status": "Terminé"
+        }
+      ],
+      "favorite": false,
+      "lastUpdated": "2026-04-25T08:15:01.764Z"
+    },
+    {
+      "id": "2",
+      "name": "E-commerce Platform",
+      "description": "Developper une plateforme de commerce electronique avec panier, paiement et gestion des commandes.",
+      "status": "Terminé",
+      "tasks": [
+        {
+          "title": "Design de la base de donnees",
+          "priority": "Haute",
+          "status": "Terminé"
+        },
+        {
+          "title": "Developper l'API REST",
+          "priority": "Haute",
+          "status": "En cours"
+        },
+        {
+          "title": "Creer l'interface du panier",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Integrer la passerelle de paiement",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Tests et optimisation",
+          "priority": "Moyenne",
+          "status": "En attente"
+        }
+      ],
+      "favorite": false,
+      "lastUpdated": "2026-04-25T08:14:58.454Z"
+    },
+    {
+      "id": "3",
+      "name": "Mobile App Development",
+      "description": "Creer une application mobile native pour iOS et Android avec synchronisation cloud.",
+      "status": "En attente",
+      "tasks": [
+        {
+          "title": "Definir les specifications",
+          "priority": "Haute",
+          "status": "Terminé"
+        },
+        {
+          "title": "Developper l'interface utilisateur",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Implementer la synchronisation cloud",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Tests sur appareils reels",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Publier sur les stores",
+          "priority": "Basse",
+          "status": "En attente"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Data Analytics Dashboard",
+      "description": "Creer un tableau de bord d'analyse de donnees avec visualisations en temps reel.",
+      "status": "En cours",
+      "tasks": [
+        {
+          "title": "Collecte des donnees",
+          "priority": "Haute",
+          "status": "Terminé"
+        },
+        {
+          "title": "Concevoir les visualisations",
+          "priority": "Haute",
+          "status": "En cours"
+        },
+        {
+          "title": "Implementer les graphiques",
+          "priority": "Moyenne",
+          "status": "En cours"
+        },
+        {
+          "title": "Ajouter les filtres et recherche",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Optimiser les performances",
+          "priority": "Moyenne",
+          "status": "En attente"
+        }
+      ]
+    },
+    {
+      "name": "AIVA : Automotive Intelligent Validation Assistant) : Plugin d’analyse DLT",
+      "description": "a",
+      "status": "En attente",
+      "tasks": [],
+      "id": "ov3oG_jX66Q"
+    },
+    {
+      "name": "AIVA : Automotive Intelligent Validation Assist : Plugin d’analyse DLT",
+      "description": "aaaaaaaaaa",
+      "status": "En attente",
+      "tasks": [],
+      "id": "ofIEhnZe9Pw"
+    },
+    {
+      "name": "test",
+      "description": "tesst",
+      "status": "En cours",
+      "tasks": [],
+      "id": "C-x2HZkukyo",
+      "favorite": false,
+      "lastUpdated": "2026-04-25T09:09:28.623Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

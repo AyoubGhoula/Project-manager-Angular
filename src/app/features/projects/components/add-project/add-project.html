@@ -1,0 +1,99 @@
+<div class="rounded-[1.75rem] border border-white/70 bg-white/95 p-6 shadow-xl shadow-slate-900/5">
+  <header class="mb-5">
+    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-600">Nouveau projet</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900">Creer un projet clair et actionnable</h2>
+    <p class="mt-2 text-sm text-slate-600">
+      Donnez un nom precis, une description utile et un statut de depart pour lancer
+      l'organisation.
+    </p>
+  </header>
+
+  <form #projectForm="ngForm" (ngSubmit)="addProject(projectForm)" novalidate class="space-y-4" >
+    <div>
+      <label for="projectName" class="block text-sm font-medium text-slate-700">
+        Nom du projet
+      </label>
+      <input
+        type="text"
+        id="projectName"
+        [(ngModel)]="projectName"
+        name="projectName"
+        (ngModelChange)="clearSuccessMessage()"
+        #projectNameInput="ngModel"
+        class="mt-1 w-full rounded-xl border border-slate-300 bg-slate-50/70 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:border-cyan-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-200"
+        placeholder="Ex: Refonte espace client"
+        required
+        minlength="4"
+      />
+      <div *ngIf="projectNameInput.invalid && projectNameInput.touched" class="mt-1 text-sm text-red-600">
+        <p *ngIf="projectNameInput.errors?.['required']">Le nom du projet est obligatoire.</p>
+        <p *ngIf="projectNameInput.errors?.['minlength']">Le nom du projet doit contenir au moins 4 caracteres.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="projectDescription" class="block text-sm font-medium text-slate-700">
+        Description
+      </label>
+      <textarea
+        id="projectDescription"
+        [(ngModel)]="projectDescription"
+        name="projectDescription"
+        (ngModelChange)="clearSuccessMessage()"
+        #projectDescriptionInput="ngModel"
+        class="mt-1 w-full rounded-xl border border-slate-300 bg-slate-50/70 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:border-cyan-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-200"
+        placeholder="Objectif, perimetre, livrables attendus..."
+        rows="4"
+        required
+      ></textarea>
+      <div *ngIf="projectDescriptionInput.invalid && projectDescriptionInput.touched" class="mt-1 text-sm text-red-600">
+        <p *ngIf="projectDescriptionInput.errors?.['required']">La description du projet est obligatoire.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="projectStatus" class="block text-sm font-medium text-slate-700">
+        Statut
+      </label>
+      <select
+        id="projectStatus"
+        [(ngModel)]="projectStatus"
+        name="projectStatus"
+        (ngModelChange)="clearSuccessMessage()"
+        #projectStatusInput="ngModel"
+        class="mt-1 w-full rounded-xl border border-slate-300 bg-slate-50/70 px-4 py-3 text-slate-900 transition focus:border-cyan-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-200"
+        required
+      >
+        @for (status of projectStatuses; track status) {
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+      <div *ngIf="projectStatusInput.invalid && projectStatusInput.touched" class="mt-1 text-sm text-red-600">
+        <p *ngIf="projectStatusInput.errors?.['required']">Le statut du projet est obligatoire.</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+      <button
+        type="submit"
+        [disabled]="projectForm.invalid"
+        class="rounded-xl bg-slate-950 px-4 py-3 font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Ajouter le projet
+      </button>
+      <button
+        type="button"
+        (click)="onReset(projectForm)"
+        class="rounded-xl border border-slate-300 bg-white px-4 py-3 font-semibold text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2"
+      >
+        Reinitialiser
+      </button>
+    </div>
+
+    @if (successMessage) {
+      <p class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+        {{ successMessage }}
+      </p>
+    }
+  </form>
+</div>

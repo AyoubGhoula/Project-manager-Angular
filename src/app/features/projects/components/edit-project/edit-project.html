@@ -1,0 +1,91 @@
+<div class="rounded-[1.75rem] border border-white/70 bg-white/95 p-6 shadow-xl shadow-slate-900/5 sticky top-18 z-10">
+  <header class="mb-5">
+    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">Edition</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-900">Ajuster les informations du projet</h2>
+    <p class="mt-2 text-sm text-slate-600">
+      Modifiez le cadrage du projet sans perdre les taches deja rattachees.
+    </p>
+  </header>
+
+  <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)" novalidate class="space-y-4">
+    <div>
+      <label for="editProjectName" class="block text-sm font-medium text-slate-700">
+        Nom du projet
+      </label>
+      <input
+        id="editProjectName"
+        type="text"
+        [(ngModel)]="editableProject.name"
+        name="editProjectName"
+        #editProjectNameInput="ngModel"
+        required
+        minlength="4"
+        class="mt-1 w-full rounded-xl border bg-slate-50/70 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:bg-white focus:outline-none focus:ring-2"
+        [ngClass]="{
+          'border-slate-300 focus:border-cyan-500 focus:ring-cyan-200': !(editProjectNameInput.invalid && editProjectNameInput.touched),
+          'border-red-500 focus:border-red-500 focus:ring-red-200': editProjectNameInput.invalid && editProjectNameInput.touched
+        }"
+      />
+      <div *ngIf="editProjectNameInput.invalid && editProjectNameInput.touched" class="mt-1 text-sm text-red-600">
+        <p *ngIf="editProjectNameInput.errors?.['required']">Le nom du projet est obligatoire.</p>
+        <p *ngIf="editProjectNameInput.errors?.['minlength']">Le nom du projet doit contenir au moins 4 caracteres.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="editProjectDescription" class="block text-sm font-medium text-slate-700">
+        Description
+      </label>
+      <textarea
+        id="editProjectDescription"
+        [(ngModel)]="editableProject.description"
+        name="editProjectDescription"
+        #editProjectDescriptionInput="ngModel"
+        rows="4"
+        required
+        class="mt-1 w-full rounded-xl border border-slate-300 bg-slate-50/70 px-4 py-3 text-slate-900 transition focus:border-cyan-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-200"
+      ></textarea>
+      <div *ngIf="editProjectDescriptionInput.invalid && editProjectDescriptionInput.touched" class="mt-1 text-sm text-red-600">
+        <p *ngIf="editProjectDescriptionInput.errors?.['required']">La description du projet est obligatoire.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="editProjectStatus" class="block text-sm font-medium text-slate-700">
+        Statut
+      </label>
+      <select
+        id="editProjectStatus"
+        [(ngModel)]="editableProject.status"
+        name="editProjectStatus"
+        #editProjectStatusInput="ngModel"
+        required
+        class="mt-1 w-full rounded-xl border border-slate-300 bg-slate-50/70 px-4 py-3 text-slate-900 transition focus:border-cyan-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-200"
+      >
+        @for (status of projectStatuses; track status) {
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+      <div *ngIf="editProjectStatusInput.invalid && editProjectStatusInput.touched" class="mt-1 text-sm text-red-600">
+        <p *ngIf="editProjectStatusInput.errors?.['required']">Le statut du projet est obligatoire.</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+      <button
+        type="submit"
+        [disabled]="editForm.invalid"
+        class="rounded-xl bg-slate-950 px-4 py-3 font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Sauvegarder
+      </button>
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="rounded-xl border border-slate-300 bg-white px-4 py-3 font-semibold text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2"
+      >
+        Annuler
+      </button>
+    </div>
+  </form>
+</div>

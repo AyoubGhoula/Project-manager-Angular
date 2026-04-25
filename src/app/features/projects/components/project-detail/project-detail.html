@@ -1,106 +1,181 @@
 @if (project) {
-<div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-md">
-
-
-  <div class="mb-4 flex items-start justify-between gap-4">
-    <div>
-      <h2 class="text-2xl font-bold text-slate-900">{{ project.name }}</h2>
-      <p class="mt-1 text-sm text-slate-600">{{ project.description }}</p>
-    </div>
-    <span
-      class="shrink-0 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide"
-      [ngClass]="{
-        'bg-green-100 text-green-700': project.status === 'Terminé',
-        'bg-cyan-100 text-cyan-700': project.status === 'En cours',
-        'bg-amber-100 text-amber-700': project.status === 'En attente'
-      }"
-    >
-      {{ project.status }}
-    </span>
-  </div>
-
-
-  <div class="mb-4">
-    <div class="flex items-center justify-between text-sm text-slate-600 mb-1">
-      <span class="font-semibold">Progression des tâches</span>
-      <span class="font-bold text-slate-900">{{ getProgress() | number:'1.0-0' }}%</span>
-    </div>
-    <div class="h-3 w-full overflow-hidden rounded-full bg-slate-200">
-      <div
-        class="h-full rounded-full transition-all duration-500"
-        [ngClass]="{
-          'bg-green-500': getProgress() === 100,
-          'bg-cyan-500': getProgress() > 0 && getProgress() < 100,
-          'bg-slate-300': getProgress() === 0
-        }"
-        [ngStyle]="{ 'width': getProgress() + '%' }"
-      ></div>
-    </div>
-  </div>
-
-  
-  <div class="mt-5">
-    <div class="flex items-center justify-between mb-2">
-      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Tâches</p>
-      <button
-        (click)="showAddForm = !showAddForm"
-        class="rounded-lg px-3 py-1.5 text-xs font-semibold transition cursor-pointer"
-        [ngClass]="{
-          'bg-cyan-600 text-white hover:bg-cyan-700': !showAddForm,
-          'bg-slate-200 text-slate-700 hover:bg-slate-300': showAddForm
-        }"
-      >
-        @if (!showAddForm) {
-          + Ajouter une tâche
-        } @else {
-          Annuler
-        }
-      </button>
-    </div>
-
-
-    @if (showAddForm) {
-    <div class="mb-4 rounded-xl border border-cyan-200 bg-cyan-50 p-4">
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-end">
-        <div class="flex-1">
-          <label class="mb-1 block text-xs font-semibold text-slate-600">Titre de la tâche</label>
-          <input
-            [(ngModel)]="newTaskTitle"
-            placeholder="Nom de la tâche..."
-            class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
-          />
+  <div class="rounded-[1.75rem] border border-white/70 bg-white/95 p-6 shadow-xl shadow-slate-900/5">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div class="max-w-3xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-600">Vue projet</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-950">{{ project.name }}</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{{ project.description }}</p>
         </div>
-        <div>
-          <label class="mb-1 block text-xs font-semibold text-slate-600">Priorité</label>
-          <select
-            [(ngModel)]="newTaskPriority"
-            class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+
+        <div class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+          <span
+            class="inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide"
+            [ngClass]="{
+              'bg-amber-100 text-amber-700': project.status === 'En attente',
+              'bg-cyan-100 text-cyan-700': project.status === 'En cours',
+              'bg-emerald-100 text-emerald-700': project.status === 'Termin\u00E9'
+            }"
           >
-            <option value="Haute">Haute</option>
-            <option value="Moyenne">Moyenne</option>
-            <option value="Basse">Basse</option>
+            {{ project.status }}
+          </span>
+
+          <label class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+            Statut du projet
+          </label>
+          <select
+            class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+            [ngModel]="project.status"
+            (ngModelChange)="changeProjectStatus($event)"
+          >
+            @for (status of projectStatuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
           </select>
+
+          <button
+            type="button"
+            (click)="onEditProject()"
+            class="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            Modifier le projet
+          </button>
         </div>
-        <button
-          (click)="addTask()"
-          [disabled]="!newTaskTitle.trim()"
-          class="rounded-lg bg-cyan-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-700 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
-        >
-          Ajouter
-        </button>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Progression</p>
+          <p class="mt-3 text-3xl font-bold text-slate-950">{{ getProgress() }}%</p>
+          <div class="mt-3 h-3 overflow-hidden rounded-full bg-slate-200">
+            <div
+              class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 transition-all duration-500"
+              [style.width.%]="getProgress()"
+            ></div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Taches terminees</p>
+          <p class="mt-3 text-3xl font-bold text-slate-950">{{ completedTasksCount }}</p>
+          <p class="mt-2 text-sm text-slate-600">{{ project.tasks.length }} taches au total</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Priorite haute</p>
+          <p class="mt-3 text-3xl font-bold text-slate-950">{{ highPriorityTasksCount }}</p>
+          <p class="mt-2 text-sm text-slate-600">Pour garder le bon niveau de focus.</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Pilotage des taches</p>
+            <h3 class="mt-2 text-xl font-semibold text-slate-950">Organiser et mettre a jour le backlog</h3>
+          </div>
+
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <input
+              [(ngModel)]="taskSearchTerm"
+              placeholder="Rechercher une tache..."
+              class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 sm:w-64"
+            />
+
+            <select
+              [(ngModel)]="taskStatusFilter"
+              class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+            >
+              <option value="">Tous les statuts</option>
+              @for (status of projectStatuses; track status) {
+                <option [value]="status">{{ status }}</option>
+              }
+            </select>
+
+            <button
+              type="button"
+              (click)="clearTaskFilters()"
+              class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+            >
+              Effacer
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-5 flex items-center justify-between">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Taches</p>
+          <button
+            type="button"
+            (click)="showAddForm = !showAddForm"
+            class="rounded-xl px-4 py-2 text-sm font-semibold transition"
+            [ngClass]="{
+              'bg-slate-950 text-white hover:bg-slate-800': !showAddForm,
+              'bg-slate-200 text-slate-700 hover:bg-slate-300': showAddForm
+            }"
+          >
+            @if (!showAddForm) {
+              Ajouter une tache
+            } @else {
+              Fermer le formulaire
+            }
+          </button>
+        </div>
+
+        @if (showAddForm) {
+          <div class="mt-4 rounded-2xl border border-cyan-200 bg-cyan-50/80 p-4">
+            <div class="flex flex-col gap-3 lg:flex-row lg:items-end">
+              <div class="flex-1">
+                <label class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  Titre de la tache
+                </label>
+                <input
+                  [(ngModel)]="newTaskTitle"
+                  placeholder="Ex: Finaliser les maquettes mobile"
+                  class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                />
+              </div>
+
+              <div>
+                <label class="mb-1 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  Priorite
+                </label>
+                <select
+                  [(ngModel)]="newTaskPriority"
+                  class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                >
+                  <option value="Haute">Haute</option>
+                  <option value="Moyenne">Moyenne</option>
+                  <option value="Basse">Basse</option>
+                </select>
+              </div>
+
+              <button
+                type="button"
+                (click)="addTask()"
+                [disabled]="!newTaskTitle.trim()"
+                class="rounded-xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Ajouter
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (project.tasks.length === 0) {
+          <p class="mt-5 text-sm italic text-slate-500">Aucune tache pour ce projet.</p>
+        } @else if (filteredTasks.length === 0) {
+          <p class="mt-5 text-sm italic text-slate-500">
+            Aucune tache ne correspond aux filtres actuels.
+          </p>
+        } @else {
+          <app-task-list
+            [tasks]="filteredTasks"
+            (statusChanged)="onStatusChanged($event)"
+            (priorityChanged)="onPriorityChanged($event)"
+            (taskDeleted)="onTaskDeleted($event)"
+          ></app-task-list>
+        }
       </div>
     </div>
-    }
-
-    @if (project.tasks.length === 0) {
-      <p class="text-sm text-slate-500 italic">Aucune tâche</p>
-    } @else {
-      <app-task-list
-        [tasks]="project.tasks"
-        (statusChanged)="onStatusChanged($event)"
-        (taskDeleted)="onTaskDeleted($event)"
-      ></app-task-list>
-    }
   </div>
-</div>
 }

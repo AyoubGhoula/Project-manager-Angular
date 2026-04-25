@@ -1,59 +1,222 @@
-# ProjectManager
+# Project Manager - Angular Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+A modern project management application built with Angular 21, featuring a beautiful UI with Tailwind CSS and real-time data management.
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+### Core Features
+- **📊 Dashboard** - Comprehensive statistics and analytics view
+  - Total projects overview
+  - Project status distribution (Completed, In Progress, Pending)
+  - Task statistics and completion rates
+  - Visual progress bars and metrics
+  
+- **📁 Project Management**
+  - Create new projects with detailed information
+  - Edit existing projects
+  - Delete projects with confirmation
+  - Search and filter projects by name, description, or status
+  - View project details and associated tasks
+  
+- **✅ Task Management**
+  - Add tasks to projects
+  - Update task status (Pending → In Progress → Completed)
+  - Delete tasks
+  - Priority levels (High, Medium, Low)
+  - Color-coded priority indicators
 
+### Technical Features
+- **State Management** - Centralized service-based architecture
+- **Reactive Programming** - RxJS observables for data flow
+- **Optimistic Updates** - Instant UI feedback with rollback on error
+- **Error Handling** - User-friendly error messages
+- **Loading States** - Visual feedback during API calls
+- **Routing** - Navigation between Dashboard and Projects views
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **Custom Directives & Pipes** - Reusable UI enhancements
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm (v9 or higher)
+
+### Installation
+
+1. Install dependencies:
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Start the JSON Server (in a separate terminal):
 ```bash
-ng generate component component-name
+npm run api
+```
+This starts the mock API server on `http://localhost:3000`
+
+3. Start the Angular development server:
+```bash
+npm start
+```
+The application will be available at `http://localhost:4200`
+
+## 📖 Usage
+
+### Navigation
+- **Dashboard** (`/dashboard`) - View statistics and overview
+- **Projects** (`/projects`) - Manage your projects
+
+### Managing Projects
+
+#### Creating a Project
+1. Navigate to the Projects page
+2. Fill in the project form:
+   - Project name
+   - Description
+   - Status (Pending, In Progress, Completed)
+3. Click "Create Project"
+
+#### Editing a Project
+1. Click "View Details" on a project card
+2. Click "Edit Project" button
+3. Modify the project information
+4. Save changes
+
+#### Deleting a Project
+1. Click the trash icon (🗑️) on a project card
+2. Confirm the deletion in the dialog
+
+#### Searching and Filtering
+- Use the search bar to filter by project name or description
+- Use the status dropdown to filter by project status
+
+### Managing Tasks
+
+#### Adding Tasks
+1. View project details
+2. Click "Add Task"
+3. Enter task title and select priority
+4. Submit the task
+
+#### Updating Task Status
+- Click on a task to cycle through statuses:
+  - En attente (Pending) → En cours (In Progress) → Terminé (Completed)
+
+#### Deleting Tasks
+- Click the delete button next to a task
+
+## 🏗️ Architecture
+
+### Project Structure
+```
+src/app/
+├── core/
+│   └── services/
+│       └── project.service.ts    # Centralized data management
+├── features/
+│   └── projects/
+│       ├── components/
+│       │   ├── dashboard/        # Statistics dashboard
+│       │   ├── project-list/     # Project listing with filters
+│       │   ├── project-detail/   # Detailed project view
+│       │   ├── add-project/      # Create project form
+│       │   ├── edit-project/     # Edit project form
+│       │   └── task-list/        # Task management
+│       ├── directives/
+│       │   └── highlight-status.directive.ts
+│       └── pipes/
+│           └── priority-color.pipe.ts
+├── app.routes.ts                 # Application routes
+├── app.ts                        # Root component
+└── app.html                      # Main layout with navigation
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Key Components
 
+#### ProjectService
+Centralized service managing all project data using RxJS BehaviorSubject for reactive state management.
+
+#### Dashboard Component
+Displays comprehensive statistics including:
+- Project counts by status
+- Task metrics
+- Completion rates
+- Visual progress indicators
+
+#### Project List Component
+Features:
+- Real-time search filtering
+- Status-based filtering
+- Optimistic updates for CRUD operations
+- Error handling with user feedback
+
+## 🎨 Styling
+
+The application uses **Tailwind CSS v4** for styling with:
+- Gradient backgrounds
+- Modern card designs
+- Smooth transitions and hover effects
+- Responsive grid layouts
+- Color-coded status indicators
+
+## 🔧 Development
+
+### Build for Production
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
-
-To build the project run:
-
+### Run Tests
 ```bash
-ng build
+npm test
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
+### Watch Mode
 ```bash
-ng test
+npm run watch
 ```
 
-## Running end-to-end tests
+## 📦 Dependencies
 
-For end-to-end (e2e) testing, run:
+### Production
+- `@angular/*` (v21.1.0) - Angular framework
+- `rxjs` (~7.8.0) - Reactive programming
+- `json-server` (^1.0.0-beta.15) - Mock REST API
+- `express` (^5.1.0) - Server framework
 
-```bash
-ng e2e
-```
+### Development
+- `@angular/cli` (^21.1.3) - Angular CLI
+- `typescript` (~5.9.2) - TypeScript compiler
+- `tailwindcss` (^4.1.12) - Utility-first CSS framework
+- `vitest` (^4.0.8) - Testing framework
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🌐 API Endpoints
 
-## Additional Resources
+The application uses JSON Server with the following endpoints:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `GET /projects` - Get all projects
+- `POST /projects` - Create a new project
+- `PUT /projects/:id` - Update a project
+- `DELETE /projects/:id` - Delete a project
+
+## 🎯 Future Enhancements
+
+Potential features to add:
+- [ ] User authentication and authorization
+- [ ] Real-time collaboration
+- [ ] File attachments to projects
+- [ ] Due dates and reminders
+- [ ] Export reports (PDF, CSV)
+- [ ] Dark mode toggle
+- [ ] Internationalization (i18n)
+- [ ] Advanced analytics and charts
+- [ ] Drag-and-drop task reordering
+- [ ] Comments on tasks
+
+## 👥 Authors
+
+University Project - Framework Web Front-End Course
+
+## 📄 License
+
+This project is part of academic coursework.

@@ -13,6 +13,7 @@ describe('ProjectDetail', () => {
     fixture = TestBed.createComponent(ProjectDetail);
     component = fixture.componentInstance;
     component.project = {
+      id: 'spec-1',
       name: 'Test',
       description: 'Test desc',
       status: 'En cours',

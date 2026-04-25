@@ -1,73 +1,75 @@
 @if (tasks.length === 0) {
-  <p class="mt-4 text-sm text-slate-500 italic">Aucune tâche</p>
+  <p class="mt-4 text-sm italic text-slate-500">Aucune tache</p>
 } @else {
-<div class="mt-4 space-y-4">
-  @for (task of tasks; track task.title) {
-  <div
-    class="rounded-xl border bg-white/90 p-4 shadow-sm border-l-4"
-    [appHighlightStatus]="task.status"
-  >
-    <div class="flex items-start justify-between gap-4">
-      <div class="flex-1">
-        <p class="text-sm font-semibold" [ngClass]="task.priority | priorityColor">
-          {{ task.title }}
-        </p>
-        <p class="mt-1 text-xs text-slate-500">
-          Priorité :
-          <span
-            class="rounded-full px-2 py-0.5 text-[11px] font-semibold"
-            [ngClass]="task.priority | priorityColor"
-          >
-            {{ task.priority }}
-          </span>
-        </p>
-      </div>
-      <div class="flex items-center gap-2 shrink-0">
-        <span
-          class="rounded-full whitespace-nowrap px-2.5 py-1 text-xs font-medium uppercase tracking-wide"
-          [ngClass]="{
-            'bg-amber-200 text-amber-800': task.status === 'En attente',
-            'bg-sky-200 text-sky-800': task.status === 'En cours',
-            'bg-green-200 text-green-800': task.status === 'Terminé'
-          }"
-          [ngStyle]="{
-            'border': task.status === 'Terminé' ? '1px solid #22c55e' :
-                      task.status === 'En cours' ? '1px solid #0ea5e9' :
-                      task.status === 'En attente' ? '1px solid #f59e0b' : '1px solid #94a3b8'
-          }"
-        >
-          {{ task.status }}
-        </span>
+  <div class="mt-4 space-y-4">
+    @for (task of tasks; track task.title) {
+      <div
+        class="rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-sm shadow-slate-200/80"
+        [appHighlightStatus]="task.status"
+      >
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <p class="text-sm font-semibold" [ngClass]="task.priority | priorityColor">
+                {{ task.title }}
+              </p>
+              <span
+                class="rounded-full px-2.5 py-1 text-[11px] font-semibold"
+                [ngClass]="task.priority | priorityColor"
+              >
+                {{ task.priority }}
+              </span>
+            </div>
+            <p class="mt-1 text-xs text-slate-500">
+              Faites avancer la tache ou ajustez sa priorite directement ici.
+            </p>
+          </div>
 
-        <button
-          (click)="nextStatus(task)"
-          class="rounded-lg px-2 py-1 text-[11px] font-medium transition cursor-pointer"
-          [ngClass]="{
-            'bg-cyan-100 text-cyan-700 hover:bg-cyan-200': task.status === 'En attente',
-            'bg-green-100 text-green-700 hover:bg-green-200': task.status === 'En cours',
-            'bg-amber-100 text-amber-700 hover:bg-amber-200': task.status === 'Terminé'
-          }"
-          [title]="'Passer à : ' + getNextStatusLabel(task.status)"
-        >
-          @if (task.status === 'En attente') {
-            &#9654; Démarrer
-          } @else if (task.status === 'En cours') {
-            &#10003; Terminer
-          } @else {
-            &#8634; Réinitialiser
-          }
-        </button>
-        <!-- Bouton supprimer -->
-        <button
-          (click)="deleteTask(task)"
-          class="rounded-lg bg-red-100 px-2 py-1 text-[11px] font-medium text-red-600 transition hover:bg-red-200 cursor-pointer"
-          title="Supprimer cette tâche"
-        >
-          &#10005;
-        </button>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <span
+              class="rounded-full whitespace-nowrap px-3 py-1 text-xs font-medium uppercase tracking-wide"
+              [ngClass]="{
+                'bg-amber-100 text-amber-700 ring-1 ring-amber-200': task.status === 'En attente',
+                'bg-sky-100 text-sky-700 ring-1 ring-sky-200': task.status === 'En cours',
+                'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200': task.status === 'Termin\u00E9'
+              }"
+            >
+              {{ task.status }}
+            </span>
+
+            <label class="flex items-center gap-2 text-xs font-medium text-slate-500">
+              Priorite
+              <select
+                class="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs text-slate-700 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                [ngModel]="task.priority"
+                (ngModelChange)="changePriority(task, $event)"
+              >
+                @for (priority of availablePriorities; track priority) {
+                  <option [value]="priority">{{ priority }}</option>
+                }
+              </select>
+            </label>
+
+            <button
+              type="button"
+              (click)="nextStatus(task)"
+              class="rounded-xl bg-slate-950 px-3 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+              [title]="'Passer a : ' + getNextStatusLabel(task.status)"
+            >
+              Mettre a jour
+            </button>
+
+            <button
+              type="button"
+              (click)="deleteTask(task)"
+              class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100"
+              title="Supprimer cette tache"
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    }
   </div>
-  }
-</div>
 }

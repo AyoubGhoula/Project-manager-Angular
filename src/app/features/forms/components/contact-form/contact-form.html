@@ -1,0 +1,264 @@
+<section class="space-y-6">
+  <header class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">Reactive Forms</p>
+    <h2 class="mt-2 text-3xl font-bold text-slate-950">Atelier complet</h2>
+    <p class="mt-3 text-sm text-slate-600">
+      FormControl, FormGroup, FormArray, validateurs personnalises, validation asynchrone et formulaires imbriques.
+    </p>
+  </header>
+
+  <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-semibold text-slate-900">Partie 1 - Q1/Q2: Premier formulaire reactif</h3>
+
+    <form [formGroup]="basicForm" (ngSubmit)="submitBasicForm()" class="mt-4 space-y-3" novalidate>
+      <label class="block text-sm font-medium text-slate-700" for="basic-email">Email</label>
+      <input
+        id="basic-email"
+        type="email"
+        formControlName="email"
+        placeholder="email@domaine.com"
+        [class.is-invalid]="emailBasic && emailBasic.invalid && emailBasic.touched"
+        class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+      />
+
+      <div *ngIf="emailBasic && emailBasic.invalid && emailBasic.touched" class="space-y-1 text-sm text-rose-600">
+        <p *ngIf="emailBasic.errors?.['required']">L'email est requis.</p>
+        <p *ngIf="emailBasic.errors?.['email']">Le format email est invalide.</p>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="basicForm.invalid"
+        class="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Envoyer
+      </button>
+    </form>
+
+    <div class="mt-4 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
+      <p class="font-semibold text-slate-800">Valeur JSON du formulaire</p>
+      <pre>{{ basicForm.value | json }}</pre>
+    </div>
+  </article>
+
+  <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-semibold text-slate-900">Partie 1 - Q3: Formulaire de contact valide</h3>
+
+    <form [formGroup]="contactForm" (ngSubmit)="submitContactForm()" class="mt-4 grid gap-4 md:grid-cols-2" novalidate>
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="nom">Nom</label>
+        <input
+          id="nom"
+          type="text"
+          formControlName="nom"
+          [class.is-invalid]="hasError(nom, 'required') || hasError(nom, 'minlength')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *ngIf="hasError(nom, 'required')" class="mt-1 text-sm text-rose-600">Le nom est requis.</p>
+        <p *ngIf="hasError(nom, 'minlength')" class="mt-1 text-sm text-rose-600">Minimum 2 caracteres.</p>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="prenom">Prenom</label>
+        <input
+          id="prenom"
+          type="text"
+          formControlName="prenom"
+          [class.is-invalid]="hasError(prenom, 'required') || hasError(prenom, 'minlength')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *ngIf="hasError(prenom, 'required')" class="mt-1 text-sm text-rose-600">Le prenom est requis.</p>
+        <p *ngIf="hasError(prenom, 'minlength')" class="mt-1 text-sm text-rose-600">Minimum 2 caracteres.</p>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="contact-email">Email</label>
+        <input
+          id="contact-email"
+          type="email"
+          formControlName="email"
+          [class.is-invalid]="hasError(emailContact, 'required') || hasError(emailContact, 'email')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *ngIf="hasError(emailContact, 'required')" class="mt-1 text-sm text-rose-600">L'email est requis.</p>
+        <p *ngIf="hasError(emailContact, 'email')" class="mt-1 text-sm text-rose-600">Format email invalide.</p>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="telephone">Telephone</label>
+        <input
+          id="telephone"
+          type="text"
+          formControlName="telephone"
+          placeholder="0611223344"
+          [class.is-invalid]="hasError(telephone, 'pattern')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *ngIf="hasError(telephone, 'pattern')" class="mt-1 text-sm text-rose-600">
+          Format attendu: 0 suivi de 9 chiffres.
+        </p>
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="message">Message</label>
+        <textarea
+          id="message"
+          rows="4"
+          formControlName="message"
+          [class.is-invalid]="hasError(message, 'required') || hasError(message, 'minlength')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        ></textarea>
+        <p *ngIf="hasError(message, 'required')" class="mt-1 text-sm text-rose-600">Le message est requis.</p>
+        <p *ngIf="hasError(message, 'minlength')" class="mt-1 text-sm text-rose-600">Minimum 10 caracteres.</p>
+      </div>
+
+      <div class="md:col-span-2">
+        <button
+          type="submit"
+          [disabled]="contactForm.invalid"
+          class="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Soumettre le formulaire de contact
+        </button>
+      </div>
+    </form>
+  </article>
+
+  <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-semibold text-slate-900">Partie 2/3 - FormBuilder + validateurs avances + FormArray</h3>
+
+    <form [formGroup]="accountForm" (ngSubmit)="submitAccountForm()" class="mt-4 space-y-5" novalidate>
+      <fieldset formGroupName="credentials" class="grid gap-4 md:grid-cols-2">
+        <legend class="mb-1 text-sm font-semibold uppercase tracking-wide text-slate-500">Credentials</legend>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="account-email">Email</label>
+          <input
+            id="account-email"
+            type="email"
+            formControlName="email"
+            [class.is-invalid]="hasError(emailAccount, 'required') || hasError(emailAccount, 'email') || hasError(emailAccount, 'emailExists')"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *ngIf="emailAccount.pending" class="mt-1 text-sm text-amber-600">Verification de l'email...</p>
+          <p *ngIf="hasError(emailAccount, 'required')" class="mt-1 text-sm text-rose-600">L'email est requis.</p>
+          <p *ngIf="hasError(emailAccount, 'email')" class="mt-1 text-sm text-rose-600">Format email invalide.</p>
+          <p *ngIf="hasError(emailAccount, 'emailExists')" class="mt-1 text-sm text-rose-600">Cet email existe deja.</p>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="password">Mot de passe</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            [class.is-invalid]="hasError(password, 'required') || hasError(password, 'passwordStrength')"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *ngIf="hasError(password, 'required')" class="mt-1 text-sm text-rose-600">Le mot de passe est requis.</p>
+          <p *ngIf="hasError(password, 'passwordStrength')" class="mt-1 text-sm text-rose-600">
+            Le mot de passe doit contenir majuscule, minuscule, chiffre, caractere special et 8 caracteres minimum.
+          </p>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="confirmPassword">Confirmation</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            [class.is-invalid]="hasError(confirmPassword, 'required') || (accountForm.errors?.['passwordMismatch'] && confirmPassword.touched)"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *ngIf="hasError(confirmPassword, 'required')" class="mt-1 text-sm text-rose-600">La confirmation est requise.</p>
+          <p *ngIf="accountForm.errors?.['passwordMismatch'] && confirmPassword.touched" class="mt-1 text-sm text-rose-600">
+            Les mots de passe ne correspondent pas.
+          </p>
+        </div>
+      </fieldset>
+
+      <fieldset formGroupName="profile" class="space-y-3">
+        <legend class="text-sm font-semibold uppercase tracking-wide text-slate-500">Profil (formulaire imbrique)</legend>
+
+        <div formGroupName="adresse" class="grid gap-4 md:grid-cols-3">
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700" for="rue">Rue</label>
+            <input
+              id="rue"
+              type="text"
+              formControlName="rue"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+            />
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700" for="ville">Ville</label>
+            <input
+              id="ville"
+              type="text"
+              formControlName="ville"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+            />
+          </div>
+
+          <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700" for="codePostal">Code postal</label>
+            <input
+              id="codePostal"
+              type="text"
+              formControlName="codePostal"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="space-y-3">
+        <legend class="text-sm font-semibold uppercase tracking-wide text-slate-500">Competences (FormArray dynamique)</legend>
+
+        <div formArrayName="competences" class="space-y-2">
+          <div
+            *ngFor="let competenceControl of competences.controls; let i = index"
+            class="flex flex-col gap-2 rounded-xl border border-slate-200 p-3 sm:flex-row sm:items-center"
+          >
+            <input
+              type="text"
+              [formControlName]="i"
+              placeholder="Ex: Angular, RxJS, REST"
+              [class.is-invalid]="competenceControl.invalid && competenceControl.touched"
+              class="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-cyan-500"
+            />
+            <button
+              type="button"
+              (click)="removeCompetence(i)"
+              class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700"
+            >
+              Retirer
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="addCompetence()"
+          class="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700"
+        >
+          Ajouter une competence
+        </button>
+      </fieldset>
+
+      <button
+        type="submit"
+        [disabled]="accountForm.invalid || accountForm.pending"
+        class="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Creer le compte
+      </button>
+    </form>
+
+    <div class="mt-4 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
+      <p class="font-semibold text-slate-800">Valeur JSON (formulaire avance)</p>
+      <pre>{{ accountForm.value | json }}</pre>
+    </div>
+  </article>
+</section>
