@@ -5,6 +5,7 @@
       "name": "project manager",
       "description": "Apprendre a creer une application simple de gestion de projets avec Angular, comprendre la creation des composants reutilisables et integrer Tailwind pour le style.",
       "status": "En attente",
+      "ownerId": 1,
       "tasks": [
         {
           "title": "Architecture du projet",
@@ -40,6 +41,7 @@
       "name": "E-commerce Platform",
       "description": "Developper une plateforme de commerce electronique avec panier, paiement et gestion des commandes.",
       "status": "Terminé",
+      "ownerId": 1,
       "tasks": [
         {
           "title": "Design de la base de donnees",
@@ -57,24 +59,20 @@
           "status": "En attente"
         },
         {
-          "title": "Integrer la passerelle de paiement",
-          "priority": "Haute",
-          "status": "En attente"
-        },
-        {
           "title": "Tests et optimisation",
           "priority": "Moyenne",
           "status": "En attente"
         }
       ],
       "favorite": false,
-      "lastUpdated": "2026-04-25T08:14:58.454Z"
+      "lastUpdated": "2026-05-02T08:06:42.146Z"
     },
     {
       "id": "3",
       "name": "Mobile App Development",
       "description": "Creer une application mobile native pour iOS et Android avec synchronisation cloud.",
       "status": "En attente",
+      "ownerId": 2,
       "tasks": [
         {
           "title": "Definir les specifications",
@@ -100,14 +98,22 @@
           "title": "Publier sur les stores",
           "priority": "Basse",
           "status": "En attente"
+        },
+        {
+          "title": "e=test",
+          "priority": "Haute",
+          "status": "En cours"
         }
-      ]
+      ],
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:15:08.067Z"
     },
     {
       "id": "4",
       "name": "Data Analytics Dashboard",
       "description": "Creer un tableau de bord d'analyse de donnees avec visualisations en temps reel.",
       "status": "En cours",
+      "ownerId": 2,
       "tasks": [
         {
           "title": "Collecte des donnees",
@@ -134,21 +140,33 @@
           "priority": "Moyenne",
           "status": "En attente"
         }
-      ]
+      ],
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:20:31.236Z"
     },
     {
       "name": "AIVA : Automotive Intelligent Validation Assistant) : Plugin d’analyse DLT",
       "description": "a",
       "status": "En attente",
       "tasks": [],
-      "id": "ov3oG_jX66Q"
+      "id": "ov3oG_jX66Q",
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:35:17.882Z"
     },
     {
       "name": "AIVA : Automotive Intelligent Validation Assist : Plugin d’analyse DLT",
       "description": "aaaaaaaaaa",
-      "status": "En attente",
-      "tasks": [],
-      "id": "ofIEhnZe9Pw"
+      "status": "Terminé",
+      "tasks": [
+        {
+          "title": "test",
+          "priority": "Haute",
+          "status": "Terminé"
+        }
+      ],
+      "id": "ofIEhnZe9Pw",
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:09:37.685Z"
     },
     {
       "name": "test",
@@ -156,8 +174,151 @@
       "status": "En cours",
       "tasks": [],
       "id": "C-x2HZkukyo",
+      "ownerId": 2,
       "favorite": false,
       "lastUpdated": "2026-04-25T09:09:28.623Z"
+    },
+    {
+      "name": "AIVA : Automotive Intelligent Validation Assistant) : Plugin d’analyse DLT",
+      "description": "zasjdiofeeofz",
+      "status": "En attente",
+      "tasks": [],
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:08:12.335Z",
+      "id": "h9z4U40ltL4"
+    },
+    {
+      "name": "test",
+      "description": "zazaza",
+      "status": "En attente",
+      "tasks": [],
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:15:35.438Z",
+      "ownerId": "1",
+      "id": "DIb_nO2fOik"
+    },
+    {
+      "name": "Data Analytics Dashboard (copie)",
+      "description": "Creer un tableau de bord d'analyse de donnees avec visualisations en temps reel.",
+      "status": "En attente",
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:18:17.180Z",
+      "tasks": [
+        {
+          "title": "Collecte des donnees",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Concevoir les visualisations",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Implementer les graphiques",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Ajouter les filtres et recherche",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Optimiser les performances",
+          "priority": "Moyenne",
+          "status": "En attente"
+        }
+      ],
+      "id": "LgkdojpUPLQ"
+    },
+    {
+      "name": "Data Analytics Dashboard (copie)",
+      "description": "Creer un tableau de bord d'analyse de donnees avec visualisations en temps reel.",
+      "status": "En attente",
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:18:18.370Z",
+      "tasks": [
+        {
+          "title": "Collecte des donnees",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Concevoir les visualisations",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Implementer les graphiques",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Ajouter les filtres et recherche",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Optimiser les performances",
+          "priority": "Moyenne",
+          "status": "En attente"
+        }
+      ],
+      "id": "RuX4Xpptyls"
+    },
+    {
+      "name": "Data Analytics Dashboard (copie) (copie)",
+      "description": "Creer un tableau de bord d'analyse de donnees avec visualisations en temps reel.",
+      "status": "En attente",
+      "favorite": false,
+      "lastUpdated": "2026-05-02T08:18:21.837Z",
+      "tasks": [
+        {
+          "title": "Collecte des donnees",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Concevoir les visualisations",
+          "priority": "Haute",
+          "status": "En attente"
+        },
+        {
+          "title": "Implementer les graphiques",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Ajouter les filtres et recherche",
+          "priority": "Moyenne",
+          "status": "En attente"
+        },
+        {
+          "title": "Optimiser les performances",
+          "priority": "Moyenne",
+          "status": "En attente"
+        }
+      ],
+      "id": "dbCSQ0uep4U"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "nom": "Admin",
+      "prenom": "Demo",
+      "email": "admin@demo.fr",
+      "role": "admin",
+      "password": "Admin123!"
+    },
+    {
+      "id": "2",
+      "nom": "Ayoub",
+      "prenom": "Student",
+      "email": "ayoub@demo.fr",
+      "role": "utilisateur",
+      "password": "Password123!"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

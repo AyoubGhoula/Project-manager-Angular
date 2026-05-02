@@ -1,4 +1,4 @@
-import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../../../core/services/user.service';
@@ -63,5 +63,41 @@ export function emailExistsValidator(userService: UserService): AsyncValidatorFn
       map((exists) => (exists ? { emailExists: true } : null)),
       catchError(() => of(null))
     );
+  };
+}
+
+export function minCompetencesValidator(minCount: number): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const competences = control.get('competences');
+
+    if (!(competences instanceof FormArray)) {
+      return null;
+    }
+
+    const count = competences.length;
+
+    if (count === 0) {
+      return null;
+    }
+
+    return count >= minCount ? null : { minCompetences: { required: minCount, actual: count } };
+  };
+}
+
+export function minArrayLengthValidator(
+  arrayName: string,
+  minCount: number,
+  errorKey: string
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const arrayControl = control.get(arrayName);
+
+    if (!(arrayControl instanceof FormArray)) {
+      return null;
+    }
+
+    const count = arrayControl.length;
+
+    return count >= minCount ? null : { [errorKey]: { required: minCount, actual: count } };
   };
 }

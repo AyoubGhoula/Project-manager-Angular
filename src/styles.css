@@ -51,3 +51,8 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(14, 116, 144, 0.5);
 }
+
+.is-invalid {
+  border-color: rgb(244 63 94) !important;
+  box-shadow: 0 0 0 1px rgb(244 63 94 / 25%);
+}

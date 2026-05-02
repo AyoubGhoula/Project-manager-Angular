@@ -1,0 +1,90 @@
+<section class="space-y-6">
+  <header class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">Partie 2</p>
+    <h2 class="mt-2 text-3xl font-bold text-slate-950">Validations personnalisees et async</h2>
+    <p class="mt-3 text-sm text-slate-600">
+      Validateur de mot de passe, correspondance de champs et verification d'email asynchrone.
+    </p>
+  </header>
+
+  <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-semibold text-slate-900">Compte utilisateur</h3>
+
+    <form [formGroup]="accountForm" (ngSubmit)="submitForm()" class="mt-4 grid gap-4 md:grid-cols-2" novalidate>
+      <div class="md:col-span-2">
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="validators-email">Email</label>
+        <input
+          id="validators-email"
+          type="email"
+          formControlName="email"
+          [class.is-invalid]="
+            validationService.hasError(email, 'required') ||
+            validationService.hasError(email, 'email') ||
+            validationService.hasError(email, 'emailExists')
+          "
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *ngIf="email?.pending" class="mt-1 text-sm text-amber-600">Verification de l'email...</p>
+        <p *appShowError="email; errorType: 'required'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(email, 'required') }}
+        </p>
+        <p *appShowError="email; errorType: 'email'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(email, 'email') }}
+        </p>
+        <p *appShowError="email; errorType: 'emailExists'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(email, 'emailExists') }}
+        </p>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="validators-password">Mot de passe</label>
+        <input
+          id="validators-password"
+          type="password"
+          formControlName="password"
+          [class.is-invalid]="
+            validationService.hasError(password, 'required') ||
+            validationService.hasError(password, 'passwordStrength')
+          "
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *appShowError="password; errorType: 'required'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(password, 'required') }}
+        </p>
+        <p *appShowError="password; errorType: 'passwordStrength'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(password, 'passwordStrength') }}
+        </p>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="validators-confirm">Confirmation</label>
+        <input
+          id="validators-confirm"
+          type="password"
+          formControlName="confirmPassword"
+          [class.is-invalid]="
+            validationService.hasError(confirmPassword, 'required') ||
+            (accountForm.errors?.['passwordMismatch'] && confirmPassword?.touched)
+          "
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *appShowError="confirmPassword; errorType: 'required'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(confirmPassword, 'required') }}
+        </p>
+        <p *ngIf="accountForm.errors?.['passwordMismatch'] && confirmPassword?.touched" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(accountForm, 'passwordMismatch') }}
+        </p>
+      </div>
+
+      <div class="md:col-span-2">
+        <button
+          type="submit"
+          [disabled]="accountForm.invalid || accountForm.pending"
+          class="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Valider le compte
+        </button>
+      </div>
+    </form>
+  </article>
+</section>

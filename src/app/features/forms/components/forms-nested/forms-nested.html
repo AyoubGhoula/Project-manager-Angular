@@ -1,0 +1,254 @@
+<section class="space-y-6">
+  <header class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600">Partie 5</p>
+    <h2 class="mt-2 text-3xl font-bold text-slate-950">Formulaires imbriques</h2>
+    <p class="mt-3 text-sm text-slate-600">
+      FormGroup imbrique et liste d'adresses basee sur un FormArray.
+    </p>
+  </header>
+
+  <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-semibold text-slate-900">Informations personnelles + adresse</h3>
+
+    <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" class="mt-4 grid gap-4 md:grid-cols-2" novalidate>
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-nom">Nom</label>
+        <input
+          id="nested-nom"
+          type="text"
+          formControlName="nom"
+          [class.is-invalid]="validationService.hasError(nom, 'required')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *appShowError="nom; errorType: 'required'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(nom, 'required') }}
+        </p>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-prenom">Prenom</label>
+        <input
+          id="nested-prenom"
+          type="text"
+          formControlName="prenom"
+          [class.is-invalid]="validationService.hasError(prenom, 'required')"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *appShowError="prenom; errorType: 'required'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(prenom, 'required') }}
+        </p>
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-email">Email</label>
+        <input
+          id="nested-email"
+          type="email"
+          formControlName="email"
+          [class.is-invalid]="
+            validationService.hasError(email, 'required') ||
+            validationService.hasError(email, 'email')
+          "
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+        />
+        <p *appShowError="email; errorType: 'required'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(email, 'required') }}
+        </p>
+        <p *appShowError="email; errorType: 'email'" class="mt-1 text-sm text-rose-600">
+          {{ validationService.getErrorMessage(email, 'email') }}
+        </p>
+      </div>
+
+      <fieldset formGroupName="adresse" class="md:col-span-2 grid gap-4 md:grid-cols-2">
+        <legend class="text-sm font-semibold uppercase tracking-wide text-slate-500">Adresse</legend>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-rue">Rue</label>
+          <input
+            id="nested-rue"
+            type="text"
+            formControlName="rue"
+            [class.is-invalid]="validationService.hasError(adresseGroup.get('rue'), 'required')"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *appShowError="adresseGroup.get('rue'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+            {{ validationService.getErrorMessage(adresseGroup.get('rue'), 'required') }}
+          </p>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-code">Code postal</label>
+          <input
+            id="nested-code"
+            type="text"
+            formControlName="codePostal"
+            [class.is-invalid]="
+              validationService.hasError(adresseGroup.get('codePostal'), 'required') ||
+              validationService.hasError(adresseGroup.get('codePostal'), 'pattern')
+            "
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *appShowError="adresseGroup.get('codePostal'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+            {{ validationService.getErrorMessage(adresseGroup.get('codePostal'), 'required') }}
+          </p>
+          <p *appShowError="adresseGroup.get('codePostal'); errorType: 'pattern'" class="mt-1 text-sm text-rose-600">
+            {{ validationService.getErrorMessage(adresseGroup.get('codePostal'), 'pattern') }}
+          </p>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-ville">Ville</label>
+          <input
+            id="nested-ville"
+            type="text"
+            formControlName="ville"
+            [class.is-invalid]="validationService.hasError(adresseGroup.get('ville'), 'required')"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *appShowError="adresseGroup.get('ville'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+            {{ validationService.getErrorMessage(adresseGroup.get('ville'), 'required') }}
+          </p>
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700" for="nested-pays">Pays</label>
+          <input
+            id="nested-pays"
+            type="text"
+            formControlName="pays"
+            [class.is-invalid]="validationService.hasError(adresseGroup.get('pays'), 'required')"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+          />
+          <p *appShowError="adresseGroup.get('pays'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+            {{ validationService.getErrorMessage(adresseGroup.get('pays'), 'required') }}
+          </p>
+        </div>
+      </fieldset>
+
+      <div class="md:col-span-2">
+        <button
+          type="submit"
+          [disabled]="userForm.invalid"
+          class="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Enregistrer le profil
+        </button>
+      </div>
+    </form>
+  </article>
+
+  <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <h3 class="text-xl font-semibold text-slate-900">Liste d'adresses</h3>
+
+    <form [formGroup]="addressesForm" (ngSubmit)="submitAddressesForm()" class="mt-4 space-y-4" novalidate>
+      <div formArrayName="addresses" class="space-y-3">
+        <div
+          *ngFor="let addressGroup of addresses.controls; let i = index"
+          [formGroupName]="i"
+          class="rounded-2xl border border-slate-200 p-4"
+        >
+          <div class="grid gap-3 md:grid-cols-[1fr,2fr,1fr,1fr,auto] md:items-start">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700" [for]="'addr-type-' + i">Type</label>
+              <select
+                [id]="'addr-type-' + i"
+                formControlName="type"
+                [class.is-invalid]="validationService.hasError(addressGroup.get('type'), 'required')"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+              >
+                <option value="domicile">Domicile</option>
+                <option value="travail">Travail</option>
+                <option value="autre">Autre</option>
+              </select>
+              <p *appShowError="addressGroup.get('type'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+                {{ validationService.getErrorMessage(addressGroup.get('type'), 'required') }}
+              </p>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700" [for]="'addr-rue-' + i">Rue</label>
+              <input
+                [id]="'addr-rue-' + i"
+                type="text"
+                formControlName="rue"
+                [class.is-invalid]="validationService.hasError(addressGroup.get('rue'), 'required')"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+              />
+              <p *appShowError="addressGroup.get('rue'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+                {{ validationService.getErrorMessage(addressGroup.get('rue'), 'required') }}
+              </p>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700" [for]="'addr-code-' + i">Code postal</label>
+              <input
+                [id]="'addr-code-' + i"
+                type="text"
+                formControlName="codePostal"
+                [class.is-invalid]="
+                  validationService.hasError(addressGroup.get('codePostal'), 'required') ||
+                  validationService.hasError(addressGroup.get('codePostal'), 'pattern')
+                "
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+              />
+              <p *appShowError="addressGroup.get('codePostal'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+                {{ validationService.getErrorMessage(addressGroup.get('codePostal'), 'required') }}
+              </p>
+              <p *appShowError="addressGroup.get('codePostal'); errorType: 'pattern'" class="mt-1 text-sm text-rose-600">
+                {{ validationService.getErrorMessage(addressGroup.get('codePostal'), 'pattern') }}
+              </p>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-slate-700" [for]="'addr-ville-' + i">Ville</label>
+              <input
+                [id]="'addr-ville-' + i"
+                type="text"
+                formControlName="ville"
+                [class.is-invalid]="validationService.hasError(addressGroup.get('ville'), 'required')"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-cyan-500"
+              />
+              <p *appShowError="addressGroup.get('ville'); errorType: 'required'" class="mt-1 text-sm text-rose-600">
+                {{ validationService.getErrorMessage(addressGroup.get('ville'), 'required') }}
+              </p>
+            </div>
+
+            <div class="flex items-end">
+              <button
+                type="button"
+                (click)="removeAddress(i)"
+                class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700"
+              >
+                Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p
+        *ngIf="addressesForm.errors?.['minAddresses'] && (addressesForm.touched || addressesForm.dirty)"
+        class="text-sm text-rose-600"
+      >
+        Au moins une adresse est requise.
+      </p>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          type="button"
+          (click)="addAddress()"
+          class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700"
+        >
+          Ajouter une adresse
+        </button>
+        <button
+          type="submit"
+          [disabled]="addressesForm.invalid"
+          class="rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Enregistrer les adresses
+        </button>
+      </div>
+    </form>
+  </article>
+</section>

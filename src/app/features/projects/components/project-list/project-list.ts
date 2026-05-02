@@ -8,6 +8,7 @@ import {
   ProjectService,
   ProjectStatus,
 } from '../../../../core/services/project.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { AddProject } from '../add-project/add-project';
 import { EditProject } from '../edit-project/edit-project';
 import { ProjectDetail } from '../project-detail/project-detail';
@@ -30,6 +31,7 @@ interface ToastState {
 export class ProjectList implements OnInit {
   private readonly projectService = inject(ProjectService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
 
   readonly projectStatuses = PROJECT_STATUSES;
   readonly sortOptions: { value: SortOption; label: string }[] = [
@@ -177,11 +179,14 @@ export class ProjectList implements OnInit {
   }
 
   onProjectAdded(projectData: Omit<Project, 'id'>): void {
+    const currentUser = this.authService.getCurrentUser();
+
     this.projectService
       .addProject({
         ...projectData,
         favorite: false,
         lastUpdated: new Date().toISOString(),
+        ownerId: currentUser?.id,
         tasks: projectData.tasks.map((task) => ({ ...task })),
       })
       .pipe(takeUntilDestroyed(this.destroyRef))

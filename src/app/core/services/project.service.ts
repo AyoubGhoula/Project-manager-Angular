@@ -20,6 +20,7 @@ export interface Project {
   description: string;
   status: ProjectStatus;
   tasks: Task[];
+  ownerId?: number | string;
   favorite?: boolean;
   lastUpdated?: string;
 }
